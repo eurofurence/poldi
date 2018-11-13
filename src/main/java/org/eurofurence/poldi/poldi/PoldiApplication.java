@@ -8,7 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
@@ -27,7 +27,6 @@ public class PoldiApplication extends SpringBootServletInitializer {
         return application.sources(PoldiApplication.class);
     }
 
-
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         log.warn("Dragon: cli callback requested");
@@ -41,7 +40,19 @@ public class PoldiApplication extends SpringBootServletInitializer {
             for (String beanName : beanNames) {
                 System.out.println(beanName);
             }
+        };
+    }
 
+    @Bean
+    public CommandLineRunner jpaInit(CustomerRepository repository) {
+        log.warn("Dragon: cli callback requested");
+        return args -> {
+            // save a couple of customers
+            repository.save(new Customer("Jack", "Bauer"));
+            repository.save(new Customer("Chloe", "O'Brian"));
+            repository.save(new Customer("Kim", "Bauer"));
+            repository.save(new Customer("David", "Palmer"));
+            repository.save(new Customer("Michelle", "Dessler"));
         };
     }
 
