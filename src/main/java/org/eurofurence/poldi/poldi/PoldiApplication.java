@@ -1,5 +1,10 @@
 package org.eurofurence.poldi.poldi;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
@@ -12,16 +17,14 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
-import org.springframework.jmx.export.MBeanExporter;
 
 @SpringBootApplication
 public class PoldiApplication extends SpringBootServletInitializer {
 
     static private Log log = LogFactory.getLog(HelloController.class);
 
-    @Autowired
-    MBeanExporter mBeanExporter;
+// @Autowired
+// MBeanExporter mBeanExporter;
 
     public static void main(String[] args) {
         log.warn("Dragon: starting spring");
@@ -62,18 +65,22 @@ public class PoldiApplication extends SpringBootServletInitializer {
         };
     }
 
-    // from https://stackoverflow.com/a/20749594/131146
-    @Bean
-    DataSource dataSource() {
-        // apparently needed, otherwise the application won't start up
-        // see https://stackoverflow.com/questions/28295503/migration-to-tomcat-8-instancealreadyexistsexception-datasource
-// TODO only available for @AutoWired when running on Tomcat, fails for local tests :(
-        mBeanExporter.addExcludedBean("dataSource");
 
-        JndiDataSourceLookup dslookup = new JndiDataSourceLookup();
-        dslookup.setResourceRef(true);
-        DataSource dataSource = dslookup.getDataSource("jdbc/poldiDB");
-        return dataSource;
-    }
+    @Autowired
+    DataSource datasource;
+
+    // from https://stackoverflow.com/a/20749594/131146
+// @Bean
+// DataSource dataSource() {
+// // apparently needed, otherwise the application won't start up
+// // see https://stackoverflow.com/questions/28295503/migration-to-tomcat-8-instancealreadyexistsexception-datasource
+//// TODO only available for @AutoWired when running on Tomcat, fails for local tests :(
+// mBeanExporter.addExcludedBean("dataSource");
+//
+// JndiDataSourceLookup dslookup = new JndiDataSourceLookup();
+// dslookup.setResourceRef(true);
+// DataSource dataSource = dslookup.getDataSource("jdbc/poldiDB");
+// return dataSource;
+// }
 
 }

@@ -18,7 +18,11 @@ Reference: https://docs.spring.io/spring-boot/docs/2.0.5.RELEASE/reference/htmls
 
 JPA Pitfalls: https://dev.to/alagrede/why-i-dont-want-use-jpa-anymore-fl
 
+- continue reading: https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html
+
 - verify https://stackoverflow.com/a/43094468/131146 - did this solve it?
+
+- Using AUTO_INCREMENT (GenerationType.IDENTITY) because the penality is small for us, and for MySQL it would need lots of separate sequence tables.
 
 ## Frontend
 - either server-side with http://www.thymeleaf.org
